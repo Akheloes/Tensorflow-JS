@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    </head>
+    <body>
+        <script>
+            const input = tf.input({shape: [5]});
+            const denseLayer_relu = tf.layers.dense({units: 5, activation: 'relu'});
+            const denseLayer_softmax = tf.layers.dense({units: 5, activation: 'softmax'});
+            // const denseLayer2 = tf.layers.dense({units: 100, activation: 'softmax'});
+            const output_relu = denseLayer_relu.apply(denseLayer_relu.apply(input));
+            const output_softmax = denseLayer_softmax.apply(denseLayer_softmax.apply(input));
+            const model_relu = tf.model({inputs: input, outputs: output_relu});
+            const model_softmax = tf.model({inputs: input, outputs: output_softmax});
+            const inputData = tf.ones([2, 5]);
+            console.log('----------- RELU -----------');
+            model_relu.predict(inputData).print();
+            console.log('----------- softmax -----------');
+            model_softmax.predict(inputData).print();
+
+        </script>
+    </body>
+</html>
